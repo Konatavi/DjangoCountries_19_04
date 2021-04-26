@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Countries</title>
+</head>
+<body>
+<a href="/">Home</a><br>
+{% for word in alphabet %}
+    <a href="/countries-list/{{ word }}">{{ word }}</a>
+{% endfor %}
+<ol>
+    {% for country_name in country_names %}
+        <li><a href="/country/{{ country_name }}">{{ country_name }}</a></li>
+    {% endfor %}
+</ol>
+</body>
+</html>
