@@ -8,6 +8,7 @@ with open("data/country-by-languages.json") as f:
 
 COUNTRIES_ON_PAGE = 5
 
+
 def main(request):
     return render(request, 'index.html')
 
@@ -18,20 +19,14 @@ def countries(request):
     country_names = []
     for country_dict in countries_data:
         country_names.append(country_dict["country"])
+    word = request.GET.get('word')
+    if word:
+        country_names = list(filter(lambda name: name[0] == word, country_names))
     paginator = Paginator(country_names, COUNTRIES_ON_PAGE)
     page_number = request.GET.get('page')
     page_countries = paginator.get_page(page_number)
-    return render(request, 'countries.html', {"page_countries": page_countries, "alphabet": alphabet})
-
-
-def countries_filter_by_word(request, word):
-    alphabet = string.ascii_uppercase
-    country_names = []
-    for country_dict in countries_data:
-        country_names.append(country_dict["country"])
-    country_names = filter(lambda name: name[0] == word, country_names)
-    print(country_names)
-    return render(request, 'countries.html', {"page_countries": country_names, "alphabet": alphabet})
+    return render(request, 'countries.html',
+                  {"page_countries": page_countries, "alphabet": alphabet, "word": word})
 
 
 def countries_filter_by_lang(request, language):

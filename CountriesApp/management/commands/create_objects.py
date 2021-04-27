@@ -1,6 +1,7 @@
 import json
 from django.core.management.base import BaseCommand
 from CountriesApp.models import Country, Language
+from django.db.utils import IntegrityError
 
 
 class Command(BaseCommand):
@@ -13,6 +14,10 @@ class Command(BaseCommand):
                 country = Country(name=country_dict["country"])
                 country.save()
                 for language_name in country_dict["languages"]:
-                    language = Language(name=language_name)
-                    language.save()
+                    # try:
+                    #     language = Language(name=language_name)
+                    #     language.save()
+                    # except IntegrityError:
+                    #     language = Language.objects.get(name=language_name)
+                    language, created = Language.objects.get_or_create(name=language_name)
                     country.languages.add(language)

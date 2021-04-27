@@ -7,7 +7,7 @@
 <body>
 <a href="/">Home</a><br>
 {% for word in alphabet %}
-    <a href="/countries-list/{{ word }}">{{ word }}</a>
+    <a href="?word={{ word }}">{{ word }}</a>
 {% endfor %}
 <ol>
     {% for country_name in page_countries %}
@@ -17,8 +17,8 @@
 <div class="pagination">
     <span class="step-links">
         {% if page_countries.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_countries.previous_page_number }}">previous</a>
+            <a href="?page=1&word={{ word }}">&laquo; first</a>
+            <a href="?page={{ page_countries.previous_page_number }}&word={{ word }}">previous</a>
         {% endif %}
 
         <span class="current">
@@ -26,8 +26,8 @@
         </span>
 
         {% if page_countries.has_next %}
-            <a href="?page={{ page_countries.next_page_number }}">next</a>
-            <a href="?page={{ page_countries.paginator.num_pages }}">last &raquo;</a>
+            <a href="?page={{ page_countries.next_page_number }}&word={{ word }}">next</a>
+            <a href="?page={{ page_countries.paginator.num_pages }}&word={{ word }}">last &raquo;</a>
         {% endif %}
     </span>
 </div>
